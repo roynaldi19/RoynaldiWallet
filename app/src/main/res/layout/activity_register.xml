@@ -7,16 +7,16 @@
     tools:context=".view.register.RegisterActivity">
 
     <ImageView
-        android:id="@+id/iv"
+        android:id="@+id/iv_title"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/guideline_horizontal2"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/image_signup" />
 
@@ -34,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_horizontal" />
 
 
     <TextView
@@ -133,32 +133,64 @@
             app:passwordToggleEnabled="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/tv_last_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/last_name"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_firstName_textLayout" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edt_lastName_textLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_last_name"
+        app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_lastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            app:passwordToggleEnabled="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/signupButton"
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:backgroundTint="@color/navi"
         android:text="@string/register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_firstName_textLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_lastName_textLayout" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHorizontal"
+        android:id="@+id/guideline_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="64dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.30191082"
+        app:layout_constraintGuide_begin="180dp"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineVertical"
+        android:id="@+id/guideline_vertical"
         android:layout_width="wrap_content"
         android:layout_height="64dp"
         android:orientation="vertical"
@@ -167,7 +199,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/copyrightTextView"
+        android:id="@+id/tv_copyRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -180,11 +212,11 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+        android:id="@+id/guideline_horizontal2"
         android:layout_width="wrap_content"
         android:layout_height="64dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.05" />
 
     <ProgressBar
         android:id="@+id/progressBar"

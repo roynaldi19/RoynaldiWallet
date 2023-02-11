@@ -2,6 +2,7 @@
     <string name="app_name">RoynaldiWallet</string>
     <string name="title_register_page">Lengkapi data dirimu di bawah ini ya</string>
     <string name="first_name">Nama Depan</string>
+    <string name="last_name">Nama Belakang</string>
     <string name="email">Email</string>
     <string name="register">Daftar</string>
     <string name="password">Password</string>
