@@ -7,7 +7,7 @@
     tools:context=".view.register.RegisterActivity">
 
     <ImageView
-        android:id="@+id/iv_title"
+        android:id="@+id/iv_register"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
@@ -167,7 +167,7 @@
 
 
     <Button
-        android:id="@+id/signupButton"
+        android:id="@+id/btn_register"
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:layout_marginStart="32dp"

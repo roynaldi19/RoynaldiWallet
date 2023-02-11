@@ -8,5 +8,8 @@
     <string name="password">Password</string>
     <string name="validasi_password">Password minimal 6 karakter</string>
     <string name="copyright">Roynaldi</string>
+    <string name="title_welcome_page">Selamat Datang</string>
+    <string name="message_welcome_page">NuTech Wallet</string>
+    <string name="login">Masuk</string>
 
 </resources>
