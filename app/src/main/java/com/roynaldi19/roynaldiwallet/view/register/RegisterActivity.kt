@@ -1,13 +1,17 @@
 package com.roynaldi19.roynaldiwallet.view.register
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import com.roynaldi19.roynaldiwallet.api.ApiConfig
 import com.roynaldi19.roynaldiwallet.databinding.ActivityRegisterBinding
+import com.roynaldi19.roynaldiwallet.model.RegisterResponse
+import com.roynaldi19.roynaldiwallet.view.login.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -66,6 +70,28 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun register(email: String, password: String, firstName:String, lastName:String){
         showLoading(true)
+        val client = ApiConfig().getApiService().register(email, password, firstName, lastName)
+        client.enqueue(object : Callback<RegisterResponse>{
+            override fun onResponse(
+                call: Call<RegisterResponse>,
+                response: Response<RegisterResponse>
+            ) {
+                if (response.isSuccessful){
+                    showLoading(false)
+                    val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                    finishAffinity()
+                }
+
+            }
+
+            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                showLoading(false)
+                Toast.makeText(this@RegisterActivity, "Pendaftaran gagal", Toast.LENGTH_SHORT).show()
+
+            }
+
+        })
     }
 
     private fun showLoading(isLoading: Boolean) {

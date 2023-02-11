@@ -5,17 +5,17 @@ import com.google.gson.annotations.SerializedName
 data class BalanceResponse(
 
 	@field:SerializedName("data")
-	val data: DataBalance? = null,
+	val data: BalanceData,
 
 	@field:SerializedName("message")
-	val message: String? = null,
+	val message: String,
 
 	@field:SerializedName("status")
-	val status: Int? = null
+	val status: Int
 )
 
-data class DataBalance(
+data class BalanceData(
 
 	@field:SerializedName("balance")
-	val balance: Any? = null
+	val balance: Any
 )

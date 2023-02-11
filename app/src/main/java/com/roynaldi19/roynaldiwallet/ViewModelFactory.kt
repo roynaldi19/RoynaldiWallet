@@ -1,8 +1,10 @@
-package com.roynaldi19.roynaldiwallet.viewModel
+package com.roynaldi19.roynaldiwallet
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.roynaldi19.roynaldiwallet.model.UserPreference
+import com.roynaldi19.roynaldiwallet.view.login.LoginViewModel
+import com.roynaldi19.roynaldiwallet.view.main.MainViewModel
 
 class ViewModelFactory(private val pref: UserPreference) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")

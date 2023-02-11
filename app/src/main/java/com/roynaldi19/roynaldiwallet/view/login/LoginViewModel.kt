@@ -1,4 +1,4 @@
-package com.roynaldi19.roynaldiwallet.viewModel
+package com.roynaldi19.roynaldiwallet.view.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

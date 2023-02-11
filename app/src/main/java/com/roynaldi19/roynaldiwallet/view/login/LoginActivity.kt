@@ -1,11 +1,13 @@
 package com.roynaldi19.roynaldiwallet.view.login
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -13,11 +15,13 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.roynaldi19.roynaldiwallet.api.ApiConfig
 import com.roynaldi19.roynaldiwallet.databinding.ActivityLoginBinding
-import com.roynaldi19.roynaldiwallet.model.LoginResponse
 import com.roynaldi19.roynaldiwallet.model.UserPreference
-import com.roynaldi19.roynaldiwallet.viewModel.LoginViewModel
-import com.roynaldi19.roynaldiwallet.viewModel.ViewModelFactory
+import com.roynaldi19.roynaldiwallet.ViewModelFactory
+import com.roynaldi19.roynaldiwallet.model.LoginResponse
+import com.roynaldi19.roynaldiwallet.view.main.MainActivity
+import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Response
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -78,6 +82,29 @@ class LoginActivity : AppCompatActivity() {
     private fun login(email: String, password: String) {
         showLoading(true)
         val client = ApiConfig().getApiService().login(email, password)
+        client.enqueue(object : Callback<LoginResponse>{
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                if (response.isSuccessful){
+                    showLoading(false)
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        loginViewModel.saveState(true)
+                        loginViewModel.saveToken(responseBody.data.token)
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        startActivity(intent)
+                        finishAffinity()
+                    }
+                } else {
+                    Toast.makeText(this@LoginActivity, "Login Failed", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                Toast.makeText(this@LoginActivity, "Login Failed", Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
     private fun showLoading(isLoading: Boolean) {
