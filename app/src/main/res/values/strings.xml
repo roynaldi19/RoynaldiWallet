@@ -10,6 +10,8 @@
     <string name="copyright">Roynaldi</string>
     <string name="title_welcome_page">Selamat Datang</string>
     <string name="message_welcome_page">NuTech Wallet</string>
+    <string name="message_login_page">Masukkan dulu datamu ya</string>
+    <string name="title_login_page">Siap untuk masuk Nutech Wallet</string>
     <string name="login">Masuk</string>
 
 </resources>
