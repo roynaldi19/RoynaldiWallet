@@ -11,6 +11,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.roynaldi19.roynaldiwallet.R
 import com.roynaldi19.roynaldiwallet.databinding.ActivityMainBinding
@@ -18,6 +19,7 @@ import com.roynaldi19.roynaldiwallet.model.UserPreference
 import com.roynaldi19.roynaldiwallet.view.welcome.WelcomeActivity
 import com.roynaldi19.roynaldiwallet.ViewModelFactory
 import com.roynaldi19.roynaldiwallet.api.ApiConfig
+import com.roynaldi19.roynaldiwallet.model.DataItemHistory
 import com.roynaldi19.roynaldiwallet.model.HistoryResponse
 import com.roynaldi19.roynaldiwallet.view.login.LoginActivity
 import com.roynaldi19.roynaldiwallet.view.updateProfile.UpdateProfileActivity
@@ -136,6 +138,7 @@ class MainActivity : AppCompatActivity() {
                                 if (responseBody != null){
                                     mainAdapter.setData(responseBody.data)
                                     mainBinding.rvHistoryTransaction.adapter = mainAdapter
+
                                 }
                             }
 
@@ -150,6 +153,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
 
 
 

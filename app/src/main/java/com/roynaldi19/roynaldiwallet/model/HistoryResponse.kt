@@ -1,11 +1,13 @@
 package com.roynaldi19.roynaldiwallet.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class HistoryResponse(
 
 	@field:SerializedName("data")
-	val data: List<DataItemHistory>,
+	val data: ArrayList<DataItemHistory>,
 
 	@field:SerializedName("message")
 	val message: String,
@@ -13,7 +15,7 @@ data class HistoryResponse(
 	@field:SerializedName("status")
 	val status: Int
 )
-
+@Parcelize
 data class DataItemHistory(
 
 	@field:SerializedName("transaction_id")
@@ -27,4 +29,4 @@ data class DataItemHistory(
 
 	@field:SerializedName("transaction_type")
 	val transactionType: String
-)
+): Parcelable
