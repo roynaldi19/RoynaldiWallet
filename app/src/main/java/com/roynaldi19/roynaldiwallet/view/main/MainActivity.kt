@@ -21,6 +21,7 @@ import com.roynaldi19.roynaldiwallet.model.HistoryResponse
 import com.roynaldi19.roynaldiwallet.model.ProfileResponse
 import com.roynaldi19.roynaldiwallet.model.UserPreference
 import com.roynaldi19.roynaldiwallet.view.login.LoginActivity
+import com.roynaldi19.roynaldiwallet.view.topup.TopUpActivity
 import com.roynaldi19.roynaldiwallet.view.updateProfile.UpdateProfileActivity
 import com.roynaldi19.roynaldiwallet.view.welcome.WelcomeActivity
 import kotlinx.coroutines.*
@@ -45,6 +46,11 @@ class MainActivity : AppCompatActivity() {
         mainBinding.rvHistoryTransaction.layoutManager = LinearLayoutManager(this)
         mainBinding.rvHistoryTransaction.setHasFixedSize(true)
         mainAdapter = MainAdapter()
+
+        mainBinding.btnTopUp.setOnClickListener {
+            val intent = Intent(this@MainActivity, TopUpActivity::class.java)
+            startActivity(intent)
+        }
 
         setupViewModel()
         setupView()

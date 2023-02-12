@@ -1,18 +1,32 @@
 package com.roynaldi19.roynaldiwallet.view.topup
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.roynaldi19.roynaldiwallet.ViewModelFactory
+import com.roynaldi19.roynaldiwallet.api.ApiConfig
 import com.roynaldi19.roynaldiwallet.databinding.ActivityTopUpBinding
+import com.roynaldi19.roynaldiwallet.model.TopUpResponse
+import com.roynaldi19.roynaldiwallet.model.UpdateProfileResponse
 import com.roynaldi19.roynaldiwallet.model.UserPreference
+import com.roynaldi19.roynaldiwallet.view.main.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.concurrent.Executors
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -39,14 +53,14 @@ class TopUpActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        activityTopUpBinding.btnUpdate.setOnClickListener {
+        activityTopUpBinding.btnTopUp.setOnClickListener {
 
-            val amount = activityTopUpBinding.edtTopUp.text.toString()
+            val amount = activityTopUpBinding.edtTopUp.text.toString().trim()
             when {
 
                 amount.isEmpty() -> {
                     activityTopUpBinding.edtTopUp.error =
-                        "Masukkan nama Nilai Top Up"
+                        "Masukkan Nilai Top Up"
                 }
 
                 else -> {
@@ -57,9 +71,48 @@ class TopUpActivity : AppCompatActivity() {
     }
 
     private fun topUp(amount: Int){
+        val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+        val scope = CoroutineScope(dispatcher)
+        scope.launch {
+            val token = "Bearer ${topUpViewModel.getToken()}"
+            val client = ApiConfig().getApiService().topUp(token, amount)
+            client.enqueue(object :Callback<TopUpResponse>{
+                override fun onResponse(
+                    call: Call<TopUpResponse>,
+                    response: Response<TopUpResponse>
+                ) {
+                    if (response.isSuccessful){
+                        val responseBody = response.body()
+                        if(responseBody != null) {
+                            Toast.makeText(
+                                this@TopUpActivity,
+                                "Update Data Berhasil",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            val intent = Intent(this@TopUpActivity, MainActivity::class.java)
+                            startActivity(intent)
+
+                        }
+                    }
+
+                }
+
+                override fun onFailure(call: Call<TopUpResponse>, t: Throwable) {
+                    Toast.makeText(
+                        this@TopUpActivity,
+                        "Update Data gagal",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            })
+        }
 
 
     }
+
+
 
     private fun setupView() {
         @Suppress("DEPRECATION")

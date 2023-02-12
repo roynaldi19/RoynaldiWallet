@@ -22,5 +22,8 @@
     <string name="update">Ubah</string>
     <string name="title_topup_page">Masukan Nilai Top Up</string>
     <string name="nilai_top_up">Nilai Top Up</string>
+    <string name="top_up">Top Up</string>
+    <string name="transfer">Transfer</string>
+    <string name="validasi_nilai">Nilai minimal adalah  10000</string>
 
 </resources>
