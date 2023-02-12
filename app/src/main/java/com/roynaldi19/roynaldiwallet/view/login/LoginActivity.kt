@@ -27,12 +27,12 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var loginViewModel: LoginViewModel
-    private lateinit var binding: ActivityLoginBinding
+    private lateinit var activityLoginBinding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        activityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(activityLoginBinding.root)
 
         setupView()
         setupViewModel()
@@ -61,15 +61,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        binding.btnLogin.setOnClickListener {
-            val email = binding.edtEmail.text.toString()
-            val password = binding.passwordEditText.text.toString()
+        activityLoginBinding.btnLogin.setOnClickListener {
+            val email = activityLoginBinding.edtEmail.text.toString()
+            val password = activityLoginBinding.passwordEditText.text.toString()
             when {
                 email.isEmpty() -> {
-                    binding.edtEmailTextLayout.error = "Masukkan email"
+                    activityLoginBinding.edtEmailTextLayout.error = "Masukkan email"
                 }
                 password.isEmpty() -> {
-                    binding.edtPasswordTextLayout.error = "Masukkan password"
+                    activityLoginBinding.edtPasswordTextLayout.error = "Masukkan password"
                 }
                 else -> {
                     login(email, password)
@@ -109,9 +109,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         if (isLoading) {
-            binding.progressBar.visibility = View.VISIBLE
+            activityLoginBinding.progressBar.visibility = View.VISIBLE
         } else {
-            binding.progressBar.visibility = View.GONE
+            activityLoginBinding.progressBar.visibility = View.GONE
         }
     }
 }

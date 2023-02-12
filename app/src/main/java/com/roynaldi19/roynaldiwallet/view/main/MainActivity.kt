@@ -130,17 +130,15 @@ class MainActivity : AppCompatActivity() {
                         val responseBody = response.body()
                         if (responseBody != null) {
                             mainBinding.tvProfile.text = responseBody.data.firstName
+
                         }
-
                     }
-
                 }
 
                 override fun onFailure(call: Call<ProfileResponse>, t: Throwable) {
                     Log.e("onFailure", t.message.toString())
 
                 }
-
             })
         }
     }
@@ -161,20 +159,17 @@ class MainActivity : AppCompatActivity() {
                         val responseBody = response.body()
                         if (responseBody != null) {
                             mainBinding.tvBalance.text = responseBody.data.balance.toString()
+
                         }
-
                     }
-
                 }
 
                 override fun onFailure(call: Call<BalanceResponse>, t: Throwable) {
                     Log.e("onFailure", t.message.toString())
 
                 }
-
             })
         }
-
     }
 
     private fun loadTransactionHistory() {
@@ -197,14 +192,12 @@ class MainActivity : AppCompatActivity() {
 
                             }
                         }
-
-
                     }
 
                     override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
                         Log.e("onFailure", t.message.toString())
-                    }
 
+                    }
                 })
             }
         }
@@ -216,6 +209,7 @@ class MainActivity : AppCompatActivity() {
             mainBinding.progressBar.visibility = View.VISIBLE
         } else {
             mainBinding.progressBar.visibility = View.GONE
+
         }
     }
 
