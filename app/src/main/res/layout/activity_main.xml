@@ -65,9 +65,12 @@
 
     <Button
         android:id="@+id/btn_top_up"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/navi"
         android:text="@string/top_up"
         app:layout_constraintEnd_toStartOf="@+id/btn_transfer"
         app:layout_constraintHorizontal_bias="0.5"
@@ -76,9 +79,12 @@
 
     <Button
         android:id="@+id/btn_transfer"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/navi"
         android:text="@string/transfer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -123,6 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
+        android:textStyle="bold"
         android:text="@string/history_transaksi"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_top_up" />
