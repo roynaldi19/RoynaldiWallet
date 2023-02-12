@@ -1,4 +1,4 @@
-package com.roynaldi19.roynaldiwallet.view.topup
+package com.roynaldi19.roynaldiwallet.view.trasfer
 
 import android.content.Context
 import android.content.Intent
@@ -14,10 +14,12 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.roynaldi19.roynaldiwallet.ViewModelFactory
 import com.roynaldi19.roynaldiwallet.api.ApiConfig
-import com.roynaldi19.roynaldiwallet.databinding.ActivityTopUpBinding
+import com.roynaldi19.roynaldiwallet.databinding.ActivityTransferBinding
 import com.roynaldi19.roynaldiwallet.model.TopUpResponse
+import com.roynaldi19.roynaldiwallet.model.TransferResponse
 import com.roynaldi19.roynaldiwallet.model.UserPreference
 import com.roynaldi19.roynaldiwallet.view.main.MainActivity
+import com.roynaldi19.roynaldiwallet.view.topup.TopUpViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -28,14 +30,15 @@ import java.util.concurrent.Executors
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-class TopUpActivity : AppCompatActivity() {
-    private lateinit var activityTopUpBinding: ActivityTopUpBinding
-    private lateinit var topUpViewModel: TopUpViewModel
+class TransferActivity : AppCompatActivity() {
+
+    private lateinit var activityTransferBinding: ActivityTransferBinding
+    private lateinit var transferViewModel: TransferViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityTopUpBinding = ActivityTopUpBinding.inflate(layoutInflater)
-        setContentView(activityTopUpBinding.root)
+        activityTransferBinding = ActivityTransferBinding.inflate(layoutInflater)
+        setContentView(activityTransferBinding.root)
 
         setupView()
         setupViewModel()
@@ -43,51 +46,51 @@ class TopUpActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        topUpViewModel = ViewModelProvider(
+        transferViewModel = ViewModelProvider(
             this,
             ViewModelFactory(UserPreference.getInstance(dataStore))
-        )[TopUpViewModel::class.java]
+        )[TransferViewModel::class.java]
 
     }
 
     private fun setupAction() {
-        activityTopUpBinding.btnTopUp.setOnClickListener {
+        activityTransferBinding.btnTransfer.setOnClickListener {
 
-            val amount = activityTopUpBinding.edtTopUp.text.toString().trim()
+            val amount = activityTransferBinding.edtTransfer.text.toString().trim()
             when {
 
                 amount.isEmpty() -> {
-                    activityTopUpBinding.edtTopUp.error =
+                    activityTransferBinding.edtTransfer.error =
                         "Masukkan Nilai Top Up"
                 }
 
                 else -> {
-                    topUp(amount.toInt())
+                    transfer(amount.toInt())
                 }
             }
         }
     }
 
-    private fun topUp(amount: Int) {
+    private fun transfer(amount: Int){
         val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
         val scope = CoroutineScope(dispatcher)
         scope.launch {
-            val token = "Bearer ${topUpViewModel.getToken()}"
-            val client = ApiConfig().getApiService().topUp(token, amount)
-            client.enqueue(object : Callback<TopUpResponse> {
+            val token = "Bearer ${transferViewModel.getToken()}"
+            val client = ApiConfig().getApiService().transfer(token, amount)
+            client.enqueue(object : Callback<TransferResponse> {
                 override fun onResponse(
-                    call: Call<TopUpResponse>,
-                    response: Response<TopUpResponse>
+                    call: Call<TransferResponse>,
+                    response: Response<TransferResponse>
                 ) {
-                    if (response.isSuccessful) {
+                    if (response.isSuccessful){
                         val responseBody = response.body()
-                        if (responseBody != null) {
+                        if(responseBody != null) {
                             Toast.makeText(
-                                this@TopUpActivity,
+                                this@TransferActivity,
                                 "Update Data Berhasil",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            val intent = Intent(this@TopUpActivity, MainActivity::class.java)
+                            val intent = Intent(this@TransferActivity, MainActivity::class.java)
                             startActivity(intent)
 
                         }
@@ -95,9 +98,9 @@ class TopUpActivity : AppCompatActivity() {
 
                 }
 
-                override fun onFailure(call: Call<TopUpResponse>, t: Throwable) {
+                override fun onFailure(call: Call<TransferResponse>, t: Throwable) {
                     Toast.makeText(
-                        this@TopUpActivity,
+                        this@TransferActivity,
                         "Update Data gagal",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -106,6 +109,7 @@ class TopUpActivity : AppCompatActivity() {
 
             })
         }
+
     }
 
     private fun setupView() {
@@ -118,6 +122,6 @@ class TopUpActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        supportActionBar?.title = "Top Up"
+        supportActionBar?.title = "Transfer"
     }
 }

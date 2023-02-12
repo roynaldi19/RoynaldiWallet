@@ -24,9 +24,11 @@
     <string name="nilai_top_up">Nilai Top Up</string>
     <string name="top_up">Top Up</string>
     <string name="transfer">Transfer</string>
-    <string name="validasi_nilai">Nilai minimal adalah  10000</string>
+    <string name="validasi_nilai">Nilai minimal adalah 10000</string>
     <string name="history_transaksi">History Transaksi</string>
     <string name="balance">0</string>
     <string name="nama">Nama</string>
+    <string name="title_transfer_page">Masukan Nilai Transfer</string>
+    <string name="nilai_transfer">Nilai Transfer</string>
 
 </resources>

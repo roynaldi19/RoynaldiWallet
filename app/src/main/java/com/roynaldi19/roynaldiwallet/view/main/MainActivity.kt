@@ -22,6 +22,7 @@ import com.roynaldi19.roynaldiwallet.model.ProfileResponse
 import com.roynaldi19.roynaldiwallet.model.UserPreference
 import com.roynaldi19.roynaldiwallet.view.login.LoginActivity
 import com.roynaldi19.roynaldiwallet.view.topup.TopUpActivity
+import com.roynaldi19.roynaldiwallet.view.trasfer.TransferActivity
 import com.roynaldi19.roynaldiwallet.view.updateProfile.UpdateProfileActivity
 import com.roynaldi19.roynaldiwallet.view.welcome.WelcomeActivity
 import kotlinx.coroutines.*
@@ -49,6 +50,11 @@ class MainActivity : AppCompatActivity() {
 
         mainBinding.btnTopUp.setOnClickListener {
             val intent = Intent(this@MainActivity, TopUpActivity::class.java)
+            startActivity(intent)
+        }
+
+        mainBinding.btnTransfer.setOnClickListener {
+            val intent = Intent(this@MainActivity, TransferActivity::class.java)
             startActivity(intent)
         }
 

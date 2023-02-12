@@ -52,5 +52,12 @@ interface ApiService {
         @Field("amount") amount: Int,
     ): Call<TopUpResponse>
 
+    @POST("transfer")
+    @FormUrlEncoded
+    fun transfer(
+        @Header("Authorization") token: String,
+        @Field("amount") amount: Int,
+    ): Call<TransferResponse>
+
 
 }
