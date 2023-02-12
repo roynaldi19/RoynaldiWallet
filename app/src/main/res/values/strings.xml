@@ -13,5 +13,6 @@
     <string name="message_login_page">Masukkan dulu datamu ya</string>
     <string name="title_login_page">Siap untuk masuk Nutech Wallet</string>
     <string name="login">Masuk</string>
+    <string name="logout">Keluar</string>
 
 </resources>

@@ -5,9 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
+import android.view.*
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -17,6 +15,9 @@ import com.roynaldi19.roynaldiwallet.databinding.ActivityMainBinding
 import com.roynaldi19.roynaldiwallet.model.UserPreference
 import com.roynaldi19.roynaldiwallet.view.welcome.WelcomeActivity
 import com.roynaldi19.roynaldiwallet.ViewModelFactory
+import com.roynaldi19.roynaldiwallet.view.login.LoginActivity
+import kotlinx.coroutines.*
+import java.util.concurrent.Executors
 
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -58,6 +59,32 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
             }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.option_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_logout -> {
+                val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+                val scope = CoroutineScope(dispatcher)
+                scope.launch {
+                    mainViewModel.removeToken()
+                    mainViewModel.logout()
+                    withContext(Dispatchers.Main) {
+                        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                        finishAffinity()
+                    }
+                }
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
