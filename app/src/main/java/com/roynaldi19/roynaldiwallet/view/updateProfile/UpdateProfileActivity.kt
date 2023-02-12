@@ -90,11 +90,6 @@ class UpdateProfileActivity : AppCompatActivity() {
                         val responseBody = response.body()
                         if (responseBody != null) {
                             Log.i("test3", responseBody.toString())
-                            Toast.makeText(
-                                this@UpdateProfileActivity,
-                                "Update Data Berhasil",
-                                Toast.LENGTH_SHORT
-                            ).show()
                             val intent = Intent(this@UpdateProfileActivity, MainActivity::class.java)
                             startActivity(intent)
                             finishAffinity()
