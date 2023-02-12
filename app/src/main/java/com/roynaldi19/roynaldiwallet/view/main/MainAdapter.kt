@@ -9,7 +9,7 @@ import com.roynaldi19.roynaldiwallet.model.DataItemHistory
 class MainAdapter : RecyclerView.Adapter<MainAdapter.HistoryViewHolder>() {
     private val listHistory = ArrayList<DataItemHistory>()
 
-    fun setData(items: ArrayList<DataItemHistory>) {
+    fun setData(items: List<DataItemHistory>) {
         listHistory.clear()
         listHistory.addAll(items)
         notifyDataSetChanged()
