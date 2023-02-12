@@ -17,5 +17,5 @@ data class BalanceResponse(
 data class BalanceData(
 
 	@field:SerializedName("balance")
-	val balance: Any
+	val balance: Int
 )
