@@ -1,8 +1,6 @@
 package com.roynaldi19.roynaldiwallet.api
 
-import com.roynaldi19.roynaldiwallet.model.BalanceResponse
-import com.roynaldi19.roynaldiwallet.model.LoginResponse
-import com.roynaldi19.roynaldiwallet.model.RegisterResponse
+import com.roynaldi19.roynaldiwallet.model.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -27,6 +25,18 @@ interface ApiService {
     fun getBalance(
         @Header("Authorization") token: String
     ): Call<BalanceResponse>
+
+    @GET("transactionHistory")
+    fun getTransactionHistory(
+        @Header("Authorization") token: String
+    ): Call<HistoryResponse>
+
+    @GET("getProfile")
+    fun getProfile(
+        @Header("Authorization") token: String
+    ): Call<ProfileResponse>
+
+
 
 
 }
