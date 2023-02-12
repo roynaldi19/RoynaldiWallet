@@ -135,7 +135,8 @@ class MainActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val responseBody = response.body()
                         if (responseBody != null) {
-                            mainBinding.tvProfile.text = responseBody.data.firstName
+                            mainBinding.tvFirstName.text = responseBody.data.firstName
+                            mainBinding.tvLastName.text = responseBody.data.lastName
 
                         }
                     }

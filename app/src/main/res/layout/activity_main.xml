@@ -20,24 +20,45 @@
         app:srcCompat="@drawable/undraw_digital_currency_qpak" />
 
     <TextView
-        android:id="@+id/tv_profile"
+        android:id="@+id/tv_first_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        tools:text="@string/nama"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tv_last_name"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_main" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_main"
+        tools:text="@string/first_name" />
+
+    <TextView
+        android:id="@+id/tv_last_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_first_name"
+        app:layout_constraintTop_toBottomOf="@+id/iv_main"
+        tools:text="@string/last_name" />
 
     <TextView
         android:id="@+id/tv_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        tools:text="@string/balance"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_profile" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_first_name"
+        tools:text="@string/balance" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_history_transaction"
@@ -129,8 +150,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
-        android:textStyle="bold"
         android:text="@string/history_transaksi"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_top_up" />
 
