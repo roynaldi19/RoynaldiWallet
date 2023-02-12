@@ -81,9 +81,6 @@ class UpdateProfileActivity : AppCompatActivity() {
         scope.launch {
             val token = "Bearer ${updateProfileViewModel.getToken()}"
             val client = ApiConfig().getApiService().updateProfile(token, firstName, lastName)
-            Log.i("test1", token)
-            Log.i("test2", firstName)
-            //di sini data firstname masih terbaca dari editText
             client.enqueue(object : Callback<UpdateProfileResponse> {
                 override fun onResponse(
                     call: Call<UpdateProfileResponse>,
