@@ -1,6 +1,7 @@
 package com.roynaldi19.roynaldiwallet.view.updateProfile
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,7 @@ import com.roynaldi19.roynaldiwallet.api.ApiConfig
 import com.roynaldi19.roynaldiwallet.databinding.ActivityUpdateProfileBinding
 import com.roynaldi19.roynaldiwallet.model.UpdateProfileResponse
 import com.roynaldi19.roynaldiwallet.model.UserPreference
+import com.roynaldi19.roynaldiwallet.view.main.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -91,12 +93,14 @@ class UpdateProfileActivity : AppCompatActivity() {
                         val responseBody = response.body()
                         if (responseBody != null) {
                             Log.i("test3", responseBody.toString())
-                            //setelah di kirimkan ke api data fistname menjadi kosong.
                             Toast.makeText(
                                 this@UpdateProfileActivity,
                                 "Update Data Berhasil",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            val intent = Intent(this@UpdateProfileActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finishAffinity()
 
                         }
                     }
