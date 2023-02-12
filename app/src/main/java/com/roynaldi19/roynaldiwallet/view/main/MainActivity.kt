@@ -171,7 +171,7 @@ class MainActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val responseBody = response.body()
                         if (responseBody != null) {
-                            mainBinding.tvBalance.text = responseBody.data.balance.toString()
+                            mainBinding.tvBalanceNilai.text = responseBody.data.balance.toString()
 
                         }
                     }

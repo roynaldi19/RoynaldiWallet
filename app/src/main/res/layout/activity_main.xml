@@ -55,10 +55,25 @@
         android:layout_marginTop="16dp"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_balance_nilai"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_first_name"
-        tools:text="@string/balance" />
+        android:text="@string/balance" />
+
+    <TextView
+        android:id="@+id/tv_balance_nilai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_balance"
+        app:layout_constraintTop_toBottomOf="@+id/tv_first_name"
+        tools:text="@string/balance_nilai" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_history_transaction"

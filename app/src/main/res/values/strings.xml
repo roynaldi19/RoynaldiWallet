@@ -26,7 +26,8 @@
     <string name="transfer">Transfer</string>
     <string name="validasi_nilai">Nilai minimal adalah 10000</string>
     <string name="history_transaksi">History Transaksi</string>
-    <string name="balance">0</string>
+    <string name="balance_nilai">0</string>
+    <string name="balance">Saldo Rp.</string>
     <string name="nama">Nama</string>
     <string name="title_transfer_page">Masukan Nilai Transfer</string>
     <string name="nilai_transfer">Nilai Transfer</string>
