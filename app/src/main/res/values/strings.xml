@@ -20,5 +20,7 @@
     <string name="type">Type</string>
     <string name="title_update_page">Ubah Data kamu</string>
     <string name="update">Ubah</string>
+    <string name="title_topup_page">Masukan Nilai Top Up</string>
+    <string name="nilai_top_up">Nilai Top Up</string>
 
 </resources>

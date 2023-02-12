@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.roynaldi19.roynaldiwallet.model.UserPreference
 import com.roynaldi19.roynaldiwallet.view.login.LoginViewModel
 import com.roynaldi19.roynaldiwallet.view.main.MainViewModel
+import com.roynaldi19.roynaldiwallet.view.topup.TopUpViewModel
 import com.roynaldi19.roynaldiwallet.view.updateProfile.UpdateProfileViewModel
 
 class ViewModelFactory(private val pref: UserPreference) : ViewModelProvider.NewInstanceFactory() {
@@ -19,6 +20,9 @@ class ViewModelFactory(private val pref: UserPreference) : ViewModelProvider.New
             }
             modelClass.isAssignableFrom(UpdateProfileViewModel::class.java) -> {
                 UpdateProfileViewModel(pref) as T
+            }
+            modelClass.isAssignableFrom(TopUpViewModel::class.java) -> {
+                TopUpViewModel(pref) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

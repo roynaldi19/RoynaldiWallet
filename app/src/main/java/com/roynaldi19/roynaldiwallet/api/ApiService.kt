@@ -37,13 +37,28 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Call<HistoryResponse>
 
-    @Multipart
+//    @Multipart
+//    @POST("updateProfile")
+//    fun updateProfile(
+//        @Header("Authorization") token: String,
+//        @Part("firstName") firstName: String,
+//        @Part("lastName") lastName: String,
+//        ): Call<UpdateProfileResponse>
+
     @POST("updateProfile")
+    @FormUrlEncoded
     fun updateProfile(
         @Header("Authorization") token: String,
-        @Part("firstName") firstName: String,
-        @Part("lastName") lastName: String,
-        ): Call<UpdateProfileResponse>
+        @Field("first_name") fistName: String,
+        @Field("last_name") lastName: String
+    ): Call<UpdateProfileResponse>
+
+    @POST("topup")
+    @FormUrlEncoded
+    fun topUp(
+        @Header("Authorization") token: String,
+        @Field("amount") amount: String,
+    ): Call<TopUpResponse>
 
 
 }
