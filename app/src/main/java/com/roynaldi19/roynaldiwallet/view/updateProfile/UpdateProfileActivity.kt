@@ -1,9 +1,9 @@
 package com.roynaldi19.roynaldiwallet.view.updateProfile
 
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
@@ -17,13 +17,9 @@ import com.roynaldi19.roynaldiwallet.api.ApiConfig
 import com.roynaldi19.roynaldiwallet.databinding.ActivityUpdateProfileBinding
 import com.roynaldi19.roynaldiwallet.model.UpdateProfileResponse
 import com.roynaldi19.roynaldiwallet.model.UserPreference
-import com.roynaldi19.roynaldiwallet.view.login.LoginActivity
-import com.roynaldi19.roynaldiwallet.view.main.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -58,55 +54,65 @@ class UpdateProfileActivity : AppCompatActivity() {
     private fun setupAction() {
         activityUpdateProfileBinding.btnUpdate.setOnClickListener {
 
-            val firstName = activityUpdateProfileBinding.edtFirstName.text?.trim().toString()
-            val lastName = activityUpdateProfileBinding.edtLastName.text?.trim().toString()
+            val firstName = activityUpdateProfileBinding.edtFirstName.text.toString()
+            val lastName = activityUpdateProfileBinding.edtLastName.text.toString()
             when {
 
                 firstName.isEmpty() -> {
-                    activityUpdateProfileBinding.edtFirstNameTextLayout.error = "Masukkan nama Depan"
+                    activityUpdateProfileBinding.edtFirstNameTextLayout.error =
+                        "Masukkan nama Depan"
                 }
                 lastName.isEmpty() -> {
-                    activityUpdateProfileBinding.edtLastNameTextLayout.error = "Masukkan nama Belakang"
+                    activityUpdateProfileBinding.edtLastNameTextLayout.error =
+                        "Masukkan nama Belakang"
                 }
                 else -> {
-                    updateProfile()
+                    updateProfile(firstName, lastName)
                 }
             }
         }
     }
 
-    private fun updateProfile() {
-        updateProfileViewModel.apply {
-            val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
-            val scope = CoroutineScope(dispatcher)
-            val firstName = activityUpdateProfileBinding.edtFirstName.text?.trim().toString()
-            val lastName = activityUpdateProfileBinding.edtLastName.text?.trim().toString()
-            scope.launch {
-                val token = "Bearer ${updateProfileViewModel.getToken()}"
-                val client = ApiConfig().getApiService().updateProfile(token, firstName, lastName)
-                client.enqueue(object : Callback<UpdateProfileResponse>{
-                    override fun onResponse(
-                        call: Call<UpdateProfileResponse>,
-                        response: Response<UpdateProfileResponse>
-                    ) {
-                        if (response.isSuccessful){
-                            val intent = Intent(this@UpdateProfileActivity, MainActivity::class.java)
-                            startActivity(intent)
-                            finishAffinity()
+    private fun updateProfile(firstName: String, lastName: String) {
+        val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+        val scope = CoroutineScope(dispatcher)
+        scope.launch {
+            val token = "Bearer ${updateProfileViewModel.getToken()}"
+            val client = ApiConfig().getApiService().updateProfile(token, firstName, lastName)
+            Log.i("test2", firstName)
+            //di sini data firstname masih terbaca dari editText
+            client.enqueue(object : Callback<UpdateProfileResponse> {
+                override fun onResponse(
+                    call: Call<UpdateProfileResponse>,
+                    response: Response<UpdateProfileResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        if (responseBody != null) {
+                            Log.i("test3", responseBody.toString())
+                            //setelah di kirimkan ke api data fistname menjadi kosong.
+                            Toast.makeText(
+                                this@UpdateProfileActivity,
+                                "Update Data Berhasil",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
                         }
-
                     }
+                }
 
-                    override fun onFailure(call: Call<UpdateProfileResponse>, t: Throwable) {
-                        Toast.makeText(this@UpdateProfileActivity, "Update Data gagal", Toast.LENGTH_SHORT).show()
+                override fun onFailure(call: Call<UpdateProfileResponse>, t: Throwable) {
+                    Toast.makeText(
+                        this@UpdateProfileActivity,
+                        "Update Data gagal",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
 
-                    }
-
-                })
-
-            }
+            })
         }
     }
+
 
     private fun setupView() {
         @Suppress("DEPRECATION")

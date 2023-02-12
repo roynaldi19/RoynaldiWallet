@@ -1,6 +1,7 @@
 package com.roynaldi19.roynaldiwallet.api
 
 import com.roynaldi19.roynaldiwallet.model.*
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -36,18 +37,14 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Call<HistoryResponse>
 
+
     @Multipart
     @POST("updateProfile")
     fun updateProfile(
         @Header("Authorization") token: String,
         @Part("firstName") firstName: String,
         @Part("lastName") lastName: String,
-
-    ): Call<UpdateProfileResponse>
-
-
-
-
+        ): Call<UpdateProfileResponse>
 
 
 }
