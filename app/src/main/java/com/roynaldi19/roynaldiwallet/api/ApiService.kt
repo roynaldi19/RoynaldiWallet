@@ -37,7 +37,6 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Call<HistoryResponse>
 
-
     @Multipart
     @POST("updateProfile")
     fun updateProfile(
