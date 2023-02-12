@@ -1,33 +1,46 @@
 package com.roynaldi19.roynaldiwallet.view.updateProfile
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.roynaldi19.roynaldiwallet.ViewModelFactory
+import com.roynaldi19.roynaldiwallet.api.ApiConfig
 import com.roynaldi19.roynaldiwallet.databinding.ActivityUpdateProfileBinding
+import com.roynaldi19.roynaldiwallet.model.UpdateProfileResponse
 import com.roynaldi19.roynaldiwallet.model.UserPreference
-import com.roynaldi19.roynaldiwallet.view.login.LoginViewModel
-import com.roynaldi19.roynaldiwallet.view.login.dataStore
+import com.roynaldi19.roynaldiwallet.view.login.LoginActivity
+import com.roynaldi19.roynaldiwallet.view.main.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.concurrent.Executors
 
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class UpdateProfileActivity : AppCompatActivity() {
 
-    private lateinit var updateProfileBinding: ActivityUpdateProfileBinding
+    private lateinit var activityUpdateProfileBinding: ActivityUpdateProfileBinding
     private lateinit var updateProfileViewModel: UpdateProfileViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        updateProfileBinding = ActivityUpdateProfileBinding.inflate(layoutInflater)
-        setContentView(updateProfileBinding.root)
+        activityUpdateProfileBinding = ActivityUpdateProfileBinding.inflate(layoutInflater)
+        setContentView(activityUpdateProfileBinding.root)
 
         setupView()
         setupViewModel()
@@ -43,27 +56,54 @@ class UpdateProfileActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        updateProfileViewModel.btnRegister.setOnClickListener {
-            val email = activityRegisterBinding.edtEmail.text.toString()
-            val password = activityRegisterBinding.edtPassword.text.toString()
-            val firstName = activityRegisterBinding.edtFirstName.text.toString()
-            val lastName = activityRegisterBinding.edtLastName.text.toString()
+        activityUpdateProfileBinding.btnUpdate.setOnClickListener {
+
+            val firstName = activityUpdateProfileBinding.edtFirstName.text?.trim().toString()
+            val lastName = activityUpdateProfileBinding.edtLastName.text?.trim().toString()
             when {
-                email.isEmpty() -> {
-                    activityRegisterBinding.edtEmailTextLayout.error = "Masukkan email"
-                }
-                password.isEmpty() -> {
-                    activityRegisterBinding.edtPasswordTextLayout.error = "Masukkan password"
-                }
+
                 firstName.isEmpty() -> {
-                    activityRegisterBinding.edtFirstNameTextLayout.error = "Masukkan nama Depan"
+                    activityUpdateProfileBinding.edtFirstNameTextLayout.error = "Masukkan nama Depan"
                 }
                 lastName.isEmpty() -> {
-                    activityRegisterBinding.edtLastNameTextLayout.error = "Masukkan nama Belakang"
+                    activityUpdateProfileBinding.edtLastNameTextLayout.error = "Masukkan nama Belakang"
                 }
                 else -> {
-                    register(email, password, firstName, lastName)
+                    updateProfile()
                 }
+            }
+        }
+    }
+
+    private fun updateProfile() {
+        updateProfileViewModel.apply {
+            val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+            val scope = CoroutineScope(dispatcher)
+            val firstName = activityUpdateProfileBinding.edtFirstName.text?.trim().toString()
+            val lastName = activityUpdateProfileBinding.edtLastName.text?.trim().toString()
+            scope.launch {
+                val token = "Bearer ${updateProfileViewModel.getToken()}"
+                val client = ApiConfig().getApiService().updateProfile(token, firstName, lastName)
+                client.enqueue(object : Callback<UpdateProfileResponse>{
+                    override fun onResponse(
+                        call: Call<UpdateProfileResponse>,
+                        response: Response<UpdateProfileResponse>
+                    ) {
+                        if (response.isSuccessful){
+                            val intent = Intent(this@UpdateProfileActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finishAffinity()
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<UpdateProfileResponse>, t: Throwable) {
+                        Toast.makeText(this@UpdateProfileActivity, "Update Data gagal", Toast.LENGTH_SHORT).show()
+
+                    }
+
+                })
+
             }
         }
     }

@@ -18,5 +18,7 @@
     <string name="amount">Amount</string>
     <string name="time">Time</string>
     <string name="type">Type</string>
+    <string name="title_update_page">Ubah Data kamu</string>
+    <string name="update">Ubah</string>
 
 </resources>
