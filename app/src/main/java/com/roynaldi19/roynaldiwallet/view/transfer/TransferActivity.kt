@@ -1,4 +1,4 @@
-package com.roynaldi19.roynaldiwallet.view.trasfer
+package com.roynaldi19.roynaldiwallet.view.transfer
 
 import android.content.Context
 import android.content.Intent
@@ -15,11 +15,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.roynaldi19.roynaldiwallet.ViewModelFactory
 import com.roynaldi19.roynaldiwallet.api.ApiConfig
 import com.roynaldi19.roynaldiwallet.databinding.ActivityTransferBinding
-import com.roynaldi19.roynaldiwallet.model.TopUpResponse
 import com.roynaldi19.roynaldiwallet.model.TransferResponse
 import com.roynaldi19.roynaldiwallet.model.UserPreference
 import com.roynaldi19.roynaldiwallet.view.main.MainActivity
-import com.roynaldi19.roynaldiwallet.view.topup.TopUpViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -61,7 +59,7 @@ class TransferActivity : AppCompatActivity() {
 
                 amount.isEmpty() -> {
                     activityTransferBinding.edtTransfer.error =
-                        "Masukkan Nilai Top Up"
+                        "Masukkan Nilai Transfer"
                 }
 
                 else -> {
@@ -87,7 +85,7 @@ class TransferActivity : AppCompatActivity() {
                         if(responseBody != null) {
                             Toast.makeText(
                                 this@TransferActivity,
-                                "Update Data Berhasil",
+                                "Transfer Berhasil",
                                 Toast.LENGTH_SHORT
                             ).show()
                             val intent = Intent(this@TransferActivity, MainActivity::class.java)
@@ -101,7 +99,7 @@ class TransferActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<TransferResponse>, t: Throwable) {
                     Toast.makeText(
                         this@TransferActivity,
-                        "Update Data gagal",
+                        "Transfer Gagal",
                         Toast.LENGTH_SHORT
                     ).show()
 

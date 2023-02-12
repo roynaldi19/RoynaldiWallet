@@ -84,7 +84,7 @@ class TopUpActivity : AppCompatActivity() {
                         if (responseBody != null) {
                             Toast.makeText(
                                 this@TopUpActivity,
-                                "Update Data Berhasil",
+                                "Top Up Berhasil",
                                 Toast.LENGTH_SHORT
                             ).show()
                             val intent = Intent(this@TopUpActivity, MainActivity::class.java)
@@ -98,7 +98,7 @@ class TopUpActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<TopUpResponse>, t: Throwable) {
                     Toast.makeText(
                         this@TopUpActivity,
-                        "Update Data gagal",
+                        "Top Up Gagal",
                         Toast.LENGTH_SHORT
                     ).show()
 

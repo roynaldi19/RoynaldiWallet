@@ -1,4 +1,4 @@
-package com.roynaldi19.roynaldiwallet.view.trasfer
+package com.roynaldi19.roynaldiwallet.view.transfer
 
 import androidx.lifecycle.ViewModel
 import com.roynaldi19.roynaldiwallet.model.UserPreference

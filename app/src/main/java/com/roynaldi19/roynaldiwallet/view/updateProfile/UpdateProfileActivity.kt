@@ -104,7 +104,7 @@ class UpdateProfileActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<UpdateProfileResponse>, t: Throwable) {
                     Toast.makeText(
                         this@UpdateProfileActivity,
-                        "Update Data gagal",
+                        "Update Data Gagal",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

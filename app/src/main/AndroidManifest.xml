@@ -14,7 +14,7 @@
         android:theme="@style/Theme.RoynaldiWallet"
         tools:targetApi="31">
         <activity
-            android:name=".view.trasfer.TransferActivity"
+            android:name=".view.transfer.TransferActivity"
             android:exported="false" />
         <activity
             android:name=".view.topup.TopUpActivity"

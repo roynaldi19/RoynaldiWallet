@@ -6,7 +6,7 @@ import com.roynaldi19.roynaldiwallet.model.UserPreference
 import com.roynaldi19.roynaldiwallet.view.login.LoginViewModel
 import com.roynaldi19.roynaldiwallet.view.main.MainViewModel
 import com.roynaldi19.roynaldiwallet.view.topup.TopUpViewModel
-import com.roynaldi19.roynaldiwallet.view.trasfer.TransferViewModel
+import com.roynaldi19.roynaldiwallet.view.transfer.TransferViewModel
 import com.roynaldi19.roynaldiwallet.view.updateProfile.UpdateProfileViewModel
 
 class ViewModelFactory(private val pref: UserPreference) : ViewModelProvider.NewInstanceFactory() {
