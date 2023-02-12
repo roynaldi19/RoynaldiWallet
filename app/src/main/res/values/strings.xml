@@ -14,5 +14,6 @@
     <string name="title_login_page">Siap untuk masuk Nutech Wallet</string>
     <string name="login">Masuk</string>
     <string name="logout">Keluar</string>
+    <string name="update_profile">Update Profile</string>
 
 </resources>

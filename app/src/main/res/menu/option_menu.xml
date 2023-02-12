@@ -2,8 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:menuCategory="container">
+        <item android:id="@+id/action_update_profile"
+            android:title="@string/update_profile"
+            app:showAsAction="never|collapseActionView" />
         <item android:id="@+id/action_logout"
             android:title="@string/logout"
-            app:showAsAction="always" />
+            app:showAsAction="never|collapseActionView" />
     </group>
 </menu>

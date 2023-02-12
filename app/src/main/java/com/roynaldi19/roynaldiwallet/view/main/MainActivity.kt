@@ -16,6 +16,7 @@ import com.roynaldi19.roynaldiwallet.model.UserPreference
 import com.roynaldi19.roynaldiwallet.view.welcome.WelcomeActivity
 import com.roynaldi19.roynaldiwallet.ViewModelFactory
 import com.roynaldi19.roynaldiwallet.view.login.LoginActivity
+import com.roynaldi19.roynaldiwallet.view.updateProfile.UpdateProfileActivity
 import kotlinx.coroutines.*
 import java.util.concurrent.Executors
 
@@ -83,6 +84,12 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 return true
+            }
+
+            R.id.action_update_profile -> {
+                val intent = Intent(this, UpdateProfileActivity::class.java)
+                startActivity(intent)
+                true
             }
             else -> super.onOptionsItemSelected(item)
         }
