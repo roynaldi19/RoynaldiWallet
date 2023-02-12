@@ -15,5 +15,8 @@
     <string name="login">Masuk</string>
     <string name="logout">Keluar</string>
     <string name="update_profile">Update Profile</string>
+    <string name="amount">Amount</string>
+    <string name="time">Time</string>
+    <string name="type">Type</string>
 
 </resources>

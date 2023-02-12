@@ -21,6 +21,11 @@ interface ApiService {
         @Field("password") password: String
     ): Call<LoginResponse>
 
+    @GET("getProfile")
+    fun getProfile(
+        @Header("Authorization") token: String
+    ): Call<ProfileResponse>
+
     @GET("balance")
     fun getBalance(
         @Header("Authorization") token: String
@@ -31,10 +36,7 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Call<HistoryResponse>
 
-    @GET("getProfile")
-    fun getProfile(
-        @Header("Authorization") token: String
-    ): Call<ProfileResponse>
+
 
 
 
