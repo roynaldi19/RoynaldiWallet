@@ -3,26 +3,26 @@ package com.roynaldi19.roynaldiwallet.view.main
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.roynaldi19.roynaldiwallet.R
-import com.roynaldi19.roynaldiwallet.databinding.ActivityMainBinding
-import com.roynaldi19.roynaldiwallet.model.UserPreference
-import com.roynaldi19.roynaldiwallet.view.welcome.WelcomeActivity
 import com.roynaldi19.roynaldiwallet.ViewModelFactory
 import com.roynaldi19.roynaldiwallet.api.ApiConfig
-import com.roynaldi19.roynaldiwallet.model.DataItemHistory
+import com.roynaldi19.roynaldiwallet.databinding.ActivityMainBinding
+import com.roynaldi19.roynaldiwallet.model.BalanceResponse
 import com.roynaldi19.roynaldiwallet.model.HistoryResponse
+import com.roynaldi19.roynaldiwallet.model.ProfileResponse
+import com.roynaldi19.roynaldiwallet.model.UserPreference
 import com.roynaldi19.roynaldiwallet.view.login.LoginActivity
 import com.roynaldi19.roynaldiwallet.view.updateProfile.UpdateProfileActivity
+import com.roynaldi19.roynaldiwallet.view.welcome.WelcomeActivity
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -114,47 +114,101 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadProfile() {
+        showLoading(true)
+        val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+        val scope = CoroutineScope(dispatcher)
+        scope.launch {
+            val token = "Bearer ${mainViewModel.getToken()}"
+            val client = ApiConfig().getApiService().getProfile(token)
+            client.enqueue(object : Callback<ProfileResponse> {
+                override fun onResponse(
+                    call: Call<ProfileResponse>,
+                    response: Response<ProfileResponse>
+                ) {
+                    showLoading(false)
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        if (responseBody != null) {
+                            mainBinding.tvProfile.text = responseBody.data.firstName
+                        }
 
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ProfileResponse>, t: Throwable) {
+                    Log.e("onFailure", t.message.toString())
+
+                }
+
+            })
+        }
     }
+
 
     private fun loadBalance() {
+        val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+        val scope = CoroutineScope(dispatcher)
+        scope.launch {
+            val token = "Bearer ${mainViewModel.getToken()}"
+            val client = ApiConfig().getApiService().getBalance(token)
+            client.enqueue(object : Callback<BalanceResponse> {
+                override fun onResponse(
+                    call: Call<BalanceResponse>,
+                    response: Response<BalanceResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        if (responseBody != null) {
+                            mainBinding.tvBalance.text = responseBody.data.balance.toString()
+                        }
+
+                    }
+
+                }
+
+                override fun onFailure(call: Call<BalanceResponse>, t: Throwable) {
+                    Log.e("onFailure", t.message.toString())
+
+                }
+
+            })
+        }
 
     }
 
-    private fun loadTransactionHistory(){
-            mainBinding.apply {
-                val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
-                val scope = CoroutineScope(dispatcher)
-                scope.launch {
-                    val token = "Bearer ${mainViewModel.getToken()}"
-                    val client = ApiConfig().getApiService().getTransactionHistory(token)
-                    client.enqueue(object : Callback<HistoryResponse>{
-                        override fun onResponse(
-                            call: Call<HistoryResponse>,
-                            response: Response<HistoryResponse>
-                        ) {
-                            if (response.isSuccessful){
-                                val responseBody = response.body()
-                                if (responseBody != null){
-                                    mainAdapter.setData(responseBody.data)
-                                    mainBinding.rvHistoryTransaction.adapter = mainAdapter
+    private fun loadTransactionHistory() {
+        mainBinding.apply {
+            val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+            val scope = CoroutineScope(dispatcher)
+            scope.launch {
+                val token = "Bearer ${mainViewModel.getToken()}"
+                val client = ApiConfig().getApiService().getTransactionHistory(token)
+                client.enqueue(object : Callback<HistoryResponse> {
+                    override fun onResponse(
+                        call: Call<HistoryResponse>,
+                        response: Response<HistoryResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseBody = response.body()
+                            if (responseBody != null) {
+                                mainAdapter.setData(responseBody.data)
+                                mainBinding.rvHistoryTransaction.adapter = mainAdapter
 
-                                }
                             }
-
-
                         }
 
-                        override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
-                            Log.e("onFailure", t.message.toString())
-                        }
 
-                    })
-                }
+                    }
+
+                    override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
+                        Log.e("onFailure", t.message.toString())
+                    }
+
+                })
             }
         }
-
-
+    }
 
 
     private fun showLoading(isLoading: Boolean) {
