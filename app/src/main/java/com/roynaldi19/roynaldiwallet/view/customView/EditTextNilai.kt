@@ -35,7 +35,7 @@ class EditTextNilai : AppCompatEditText {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 length = s.length
                 error =
-                    if (length < 4) context.getString(R.string.validasi_nilai) else null
+                    if (length < 3) context.getString(R.string.validasi_nilai) else null
             }
 
             override fun afterTextChanged(s: Editable) {
