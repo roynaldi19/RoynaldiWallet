@@ -31,5 +31,6 @@
     <string name="nama">Nama</string>
     <string name="title_transfer_page">Masukan Nilai Transfer</string>
     <string name="nilai_transfer">Nilai Transfer</string>
+    <string name="balance_transfer">Saldo</string>
 
 </resources>

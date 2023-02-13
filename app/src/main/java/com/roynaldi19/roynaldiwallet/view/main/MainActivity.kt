@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var mainAdapter: MainAdapter
+    var balanceTransfer = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -48,6 +49,9 @@ class MainActivity : AppCompatActivity() {
         mainBinding.rvHistoryTransaction.setHasFixedSize(true)
         mainAdapter = MainAdapter()
 
+        setupViewModel()
+        setupView()
+
         mainBinding.btnTopUp.setOnClickListener {
             val intent = Intent(this@MainActivity, TopUpActivity::class.java)
             startActivity(intent)
@@ -55,11 +59,10 @@ class MainActivity : AppCompatActivity() {
 
         mainBinding.btnTransfer.setOnClickListener {
             val intent = Intent(this@MainActivity, TransferActivity::class.java)
+            intent.putExtra(TransferActivity.EXTRA_TRANSFER, balanceTransfer)
             startActivity(intent)
         }
 
-        setupViewModel()
-        setupView()
     }
 
     private fun setupView() {
@@ -171,7 +174,8 @@ class MainActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val responseBody = response.body()
                         if (responseBody != null) {
-                            mainBinding.tvBalanceNilai.text = responseBody.data.balance.toString()
+                            balanceTransfer = responseBody.data.balance
+                            mainBinding.tvBalanceNilai.text = balanceTransfer.toString()
 
                         }
                     }

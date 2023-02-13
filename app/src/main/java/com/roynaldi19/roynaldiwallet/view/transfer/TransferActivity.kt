@@ -33,6 +33,10 @@ class TransferActivity : AppCompatActivity() {
     private lateinit var activityTransferBinding: ActivityTransferBinding
     private lateinit var transferViewModel: TransferViewModel
 
+    companion object {
+        const val EXTRA_TRANSFER = "extra_transfer"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityTransferBinding = ActivityTransferBinding.inflate(layoutInflater)
@@ -41,6 +45,9 @@ class TransferActivity : AppCompatActivity() {
         setupView()
         setupViewModel()
         setupAction()
+
+        val maxTransfer = intent.getIntExtra(EXTRA_TRANSFER, 0)
+        activityTransferBinding.tvBalanceTransfer.text = maxTransfer.toString()
     }
 
     private fun setupViewModel() {
