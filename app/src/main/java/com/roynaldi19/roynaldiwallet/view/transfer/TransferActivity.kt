@@ -33,6 +33,8 @@ class TransferActivity : AppCompatActivity() {
     private lateinit var activityTransferBinding: ActivityTransferBinding
     private lateinit var transferViewModel: TransferViewModel
 
+    var maxTransfer: Int = 0
+
     companion object {
         const val EXTRA_TRANSFER = "extra_transfer"
     }
@@ -46,7 +48,7 @@ class TransferActivity : AppCompatActivity() {
         setupViewModel()
         setupAction()
 
-        val maxTransfer = intent.getIntExtra(EXTRA_TRANSFER, 0)
+        maxTransfer = intent.getIntExtra(EXTRA_TRANSFER, 0)
         activityTransferBinding.tvBalanceTransfer.text = maxTransfer.toString()
     }
 
@@ -67,6 +69,11 @@ class TransferActivity : AppCompatActivity() {
                 amount.isEmpty() -> {
                     activityTransferBinding.edtTransfer.error =
                         "Masukkan Nilai Transfer"
+                }
+
+                amount > maxTransfer.toString() -> {
+                    activityTransferBinding.edtTransfer.error =
+                        "Nilai Transfer melebihi Saldo"
                 }
 
                 else -> {
